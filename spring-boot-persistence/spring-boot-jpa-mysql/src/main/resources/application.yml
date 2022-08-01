@@ -1,0 +1,60 @@
+## Server properties
+server:
+  port: 8024
+spring:
+  application:
+    name: "Spring JPA MySQL"
+  ## DataSource properties
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_mysql_sample
+    username: root
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  ## HikariCP configuration
+  hikari:
+    minimum-idle: 0 # minimum connection pool size is 0
+    maximum-pool-size: 40 # and it can grow to at most 40 connections
+    max-life-time: 900000 # instructs Hikari to retire pooled connections after 15 minutes
+    transaction-isolation: TRANSACTION_READ_COMMITTED
+    auto-commit: false # The auto-commit mode is disabled, and we are going to let Hibernate know about this via the hibernate.connection.provider_disables_autocommit setting
+    data-source-properties: 
+      use-server-prep-stmts: false # enable statement caching
+      cache-prep-stmts: true # enable statement caching
+      prep-stmt-cache-size: 500 # enable statement caching
+      prep-stmt-cache-sql-limit: 1024 # enable statement caching
+  ## Hibernate properties
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    generate-ddl: true
+    show-sql: false # avoid Hibernate printing the SQL statements to the console
+    open-in-view: false # disable the dreadful Open-Session in View (OSIV) that’s enabled by default in Spring Boot, it can cause serious performance and scaling issues    
+    hibernate:
+      ddl-auto: update # default 'update', set to none to disable the hbm2ddl schema generation tool
+      dialect: org.hibernate.dialect.MySQL57Dialect
+      jdbc:
+        time_zone: "UTC+7" # to make it easier to handle timestamps across multiple timezones
+        batch_size: 15 # enable automatic JDBC batching
+      order_inserts: true # enable automatic JDBC batching
+      order_updates: true # enable automatic JDBC batching
+      connection: 
+        '[provider_disables_autocommit]': true # instructs Hibernate that the connection pool disables the auto-commit flag when opening database connections
+      query: 
+        '[in_clause_parameter_padding]': true # increases the likelihood of statement caching for IN queries as it reduces the number of possible SQL statements that could get generated while varying the IN clause parameter list
+        '[fail_on_pagination_over_collection_fetch]': true # I want Hibernate to throw an exception in case a pagination query uses a JOIN FETCH directive
+        '[plan_cache_max_size]': 4096 # increase the size of the Hibernate query plan cache, by using a larger cache size, we can reduce the number of JPQL and Criteria API query compilations, therefore increasing application performance
+## Logging properties
+logging:
+  level:
+    org:
+      hibernate: INFO
+        SQL: DEBUG
+        cache: DEBUG
+        stat: DEBUG
+    # the most straight-forward way of logging SQL statements 
+    # along with their runtime bind parameter values
+    # because the proxy intercepts all statement executions, 
+    # the bind parameter values can be introspected and printed as well
+    net: 
+      ttddyy: 
+        dsproxy: 
+          listener: DEBUG
