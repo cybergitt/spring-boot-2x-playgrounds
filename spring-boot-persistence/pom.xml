@@ -12,4 +12,7 @@
 	<name>spring-boot-persistence</name>
 	<packaging>pom</packaging>
 
+	<modules>
+		<module>spring-boot-jpa-mysql</module>
+	</modules>
 </project>
