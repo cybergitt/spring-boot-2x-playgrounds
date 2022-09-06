@@ -47,9 +47,9 @@ logging:
   level:
     org:
       hibernate: INFO
-#        SQL: DEBUG
-#        cache: DEBUG
-#        stat: DEBUG
+      SQL: DEBUG
+      cache: DEBUG
+      stat: DEBUG
     # the most straight-forward way of logging SQL statements 
     # along with their runtime bind parameter values
     # because the proxy intercepts all statement executions, 
