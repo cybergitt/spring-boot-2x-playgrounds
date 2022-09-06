@@ -1,46 +1,34 @@
 package com.coffeegit.springboot.jpamysql.service;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import com.coffeegit.springboot.jpamysql.model.dto.RoleDto;
 import com.coffeegit.springboot.jpamysql.model.dto.UserDto;
-import com.coffeegit.springboot.jpamysql.model.entity.Group;
-import com.coffeegit.springboot.jpamysql.model.entity.Role;
 import com.coffeegit.springboot.jpamysql.model.entity.User;
 
 public interface UserService {
 
-	void registerNewAccount(final UserDto user);
-	
-	void generateUsername(UserDto userDto, User user);
+    List<User> getAllUsers();
 
-    void generatePassword(UserDto userDto, User user);
+    Optional<User> getUserByEmail(String email) throws Exception;
+    
+    Optional<User> getUserByUsername(String username) throws Exception;
+
+    Optional<User> getUserById(UUID id) throws Exception;
 
     User saveUser(User user);
 
     User saveUserAndFlush(User user);
 
-    User updateUser(Long id, UserDto dto);
+    User updateUser(UUID id, UserDto dto);
 
-    void removeUserById(Long id);
-
-    List<User> getAllUser();
-
-    User getUserByEmail(String email);
-
-    User getUserById(Long id);
+    void deleteUserById(UUID id);
+    
+    void deleteUserByUsername(String username);
 
     boolean isEmailAlreadyExist(String email);
-
-    User addUserRole(Long id, RoleDto roleDto);
-
-    List<String> getUserGroups(Collection<Group> groups);
-
-    List<String> getUserGroupsSorted(Collection<Group> groups);
-
-    List<String> getUserRoles(Collection<Role> roles);
-
-    List<String> getUserRolesSorted(Collection<Role> roles);
+    
+    boolean isUsernameAlreadyExist(String username);
 
 }

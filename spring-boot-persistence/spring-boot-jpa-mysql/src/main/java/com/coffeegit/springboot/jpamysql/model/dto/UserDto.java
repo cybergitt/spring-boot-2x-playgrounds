@@ -1,7 +1,5 @@
 package com.coffeegit.springboot.jpamysql.model.dto;
 
-import java.util.List;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
@@ -36,6 +34,9 @@ public class UserDto {
     @NotEmpty(message = "Email can not be empty")
     @Email(message = "Please provide a valid email")
     private String email;
+    
+    @NotEmpty(message = "Username can not be empty")
+    private String username;
 
     @NotEmpty(message = "Password can not be empty")
     @JsonIgnore
@@ -43,12 +44,7 @@ public class UserDto {
 
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
-
-    private String group;
-
-    @JsonIgnore
-    private List<String> privileges;
-
+    
     @JsonIgnore
     private boolean enabled;
 

@@ -52,6 +52,9 @@ public class User extends DateAudit {
     @Email(message = "Email must be valid")
     private String email;
 	
+	@Column(name = "username", unique = true, nullable = false, length = 32)
+	private String username;
+	
 	@Column(name = "password", nullable = false, length = 72)
     private String password;
 	
@@ -87,22 +90,6 @@ public class User extends DateAudit {
     // @JsonIgnoreProperties({"users", "id"}) // This ignore the fields in Role entity.
     @JsonIgnore
     private Collection<Role> roles;
-    
-    @ManyToMany
-    @JoinTable(
-        name = "users_groups",
-		// The owning entity.
-        joinColumns = @JoinColumn(
-            name = "user_id", referencedColumnName = "id"
-        ),
-		// Non owning entity.
-        inverseJoinColumns = @JoinColumn(
-            name = "group_id", referencedColumnName = "id"
-        )
-    )
-    // @JsonIgnoreProperties({"users", "id"}) // This ignore the fields in Group entity.
-    @JsonIgnore
-    private Collection<Group> groups;
 
     @JsonIgnore
     public void removeRoles(Collection<Role> roles) {
@@ -127,27 +114,10 @@ public class User extends DateAudit {
      *
      * @param role
      */
-    @JsonIgnore
+    @SuppressWarnings("unlikely-arg-type")
+	@JsonIgnore
     public void removeRole(Role role) {
         this.roles.remove(role);
         role.getUsers().remove(role);
-    }
-
-    @JsonIgnore
-    public void removeUserGroups(Role role) {
-        this.roles.remove(role);
-        role.getUsers().remove(this);
-    }
-
-    @JsonIgnore
-    public void addUserGroups(Group group) {
-        this.groups.add(group);
-        group.getUsers().add(this);
-    }
-
-    @JsonIgnore
-    public void removeUserGroups(Group group) {
-        this.groups.remove(group);
-        group.getUsers().remove(this);
     }
 }

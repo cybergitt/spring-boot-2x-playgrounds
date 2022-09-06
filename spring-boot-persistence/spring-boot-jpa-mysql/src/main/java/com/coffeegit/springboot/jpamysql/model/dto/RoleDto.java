@@ -1,7 +1,5 @@
 package com.coffeegit.springboot.jpamysql.model.dto;
 
-import java.util.List;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
@@ -26,5 +24,4 @@ public class RoleDto {
 
 	@Enumerated(EnumType.STRING)
 	private RoleEnum role;
-	private List<String> privileges;
 }

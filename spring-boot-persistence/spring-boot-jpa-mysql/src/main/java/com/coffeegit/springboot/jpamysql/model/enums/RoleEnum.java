@@ -5,13 +5,16 @@ import lombok.Getter;
 @Getter
 public enum RoleEnum {
 
-	SUPERADMIN("SUPERADMIN"),
-    ADMIN("ADMIN"),
-    AGENT("AGENT");
+	SUPERADMIN("Super Admin"),
+    ADMIN("Administrator"),
+    EDITOR("Editor"),
+    AUTHOR("Author"),
+    CONTRIBUTOR("Contributor"),
+    SUBSCRIBER("Subscriber");
 
-    private String name;
+    private final String name;
     
-    RoleEnum(String name) {
+    private RoleEnum(String name) {
         this.name = name;
     }
 

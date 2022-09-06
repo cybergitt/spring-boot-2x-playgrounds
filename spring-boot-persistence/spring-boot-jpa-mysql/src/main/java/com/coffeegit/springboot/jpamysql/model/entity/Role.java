@@ -49,41 +49,4 @@ public class Role extends DateAudit {
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
 
-    @ManyToMany
-    @JoinTable(
-		name = "roles_privileges",
-		// The owning entity.
-        joinColumns = @JoinColumn(
-        	name = "role_id", 
-        	referencedColumnName = "id"
-		), 
-		// The non owning entity.
-        inverseJoinColumns = @JoinColumn(
-    		name = "privilege_id", 
-    		referencedColumnName = "id"
-		)
-	)
-    @JsonIgnore
-    private Collection<Privilege> privileges;
-    
-    /**
-     * Add role and also to child entity privilege.
-     *
-     * @param privilege
-     */
-    public void setPermission(Privilege privilege) {
-        this.privileges.add(privilege);
-        privilege.getRoles().add(this);
-    }
-
-    /**
-     * Remove role and also to child entity privilege.
-     *
-     * @param privilege
-     */
-    public void removePermission(Privilege privilege) {
-        this.privileges.remove(privilege);
-        privilege.getRoles().remove(this);
-    }
-
 }
