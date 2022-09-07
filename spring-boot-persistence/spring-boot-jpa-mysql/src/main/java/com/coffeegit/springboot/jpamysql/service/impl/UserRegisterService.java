@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.domain.Sort;
 
+import com.coffeegit.springboot.jpamysql.exceptions.AppException;
 import com.coffeegit.springboot.jpamysql.model.dto.UserDto;
 import com.coffeegit.springboot.jpamysql.model.entity.User;
 import com.coffeegit.springboot.jpamysql.repository.RoleRepository;
@@ -31,21 +32,21 @@ public class UserRegisterService implements UserService {
 	}
 
 	@Override
-	public Optional<User> getUserByEmail(String email) throws Exception {
+	public Optional<User> getUserByEmail(String email) throws AppException {
 		Optional<User> retrievedUsers = userRepository.findByEmail(email);
-		return Optional.ofNullable(retrievedUsers).orElseThrow(() -> new Exception(String.format("The user having email %s was not found", email)));
+		return Optional.ofNullable(retrievedUsers).orElseThrow(() -> new AppException(String.format("The user having email %s was not found", email)));
 	}
 
 	@Override
-	public Optional<User> getUserByUsername(String username) throws Exception {
+	public Optional<User> getUserByUsername(String username) throws AppException {
 		Optional<User> retrievedUsers = userRepository.findByUsername(username);
-		return Optional.ofNullable(retrievedUsers).orElseThrow(() -> new Exception(String.format("The user having username %s was not found", username)));
+		return Optional.ofNullable(retrievedUsers).orElseThrow(() -> new AppException(String.format("The user having username %s was not found", username)));
 	}
 
 	@Override
-	public Optional<User> getUserById(UUID id) throws Exception {
+	public Optional<User> getUserById(UUID id) throws AppException {
 		Optional<User> retrievedUsers = userRepository.findById(id);
-		return Optional.ofNullable(retrievedUsers).orElseThrow(() -> new Exception(String.format("The user having data %s was not found", id)));
+		return Optional.ofNullable(retrievedUsers).orElseThrow(() -> new AppException(String.format("The user having data %s was not found", id)));
 	}
 
 	@Override
@@ -59,9 +60,16 @@ public class UserRegisterService implements UserService {
 	}
 
 	@Override
-	public User updateUser(UUID id, UserDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public User updateUser(UUID id, UserDto userDto) {
+		User user = null;
+		Optional<User> optUser = userRepository.findById(id);
+		if (optUser.isPresent()) {
+			user = optUser.get();
+			user.setFirstName(userDto.getFirstName());
+			user.setLastName(userDto.getLastName());
+			return userRepository.save(user);
+		}
+		return user;
 	}
 
 	@Override
@@ -86,6 +94,11 @@ public class UserRegisterService implements UserService {
 	public boolean isUsernameAlreadyExist(String username) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String generateUsername(UserDto userDto) {
+		return userDto.getEmail().substring(0, userDto.getEmail().indexOf('@')).toLowerCase();
 	}
 
 }

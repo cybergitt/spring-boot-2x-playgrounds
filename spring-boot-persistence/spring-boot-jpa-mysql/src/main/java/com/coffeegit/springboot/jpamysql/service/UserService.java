@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.coffeegit.springboot.jpamysql.exceptions.AppException;
 import com.coffeegit.springboot.jpamysql.model.dto.UserDto;
 import com.coffeegit.springboot.jpamysql.model.entity.User;
 
@@ -11,11 +12,11 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    Optional<User> getUserByEmail(String email) throws Exception;
+    Optional<User> getUserByEmail(String email) throws AppException;
     
-    Optional<User> getUserByUsername(String username) throws Exception;
+    Optional<User> getUserByUsername(String username) throws AppException;
 
-    Optional<User> getUserById(UUID id) throws Exception;
+    Optional<User> getUserById(UUID id) throws AppException;
 
     User saveUser(User user);
 
@@ -31,4 +32,5 @@ public interface UserService {
     
     boolean isUsernameAlreadyExist(String username);
 
+    String generateUsername(UserDto userDto);
 }

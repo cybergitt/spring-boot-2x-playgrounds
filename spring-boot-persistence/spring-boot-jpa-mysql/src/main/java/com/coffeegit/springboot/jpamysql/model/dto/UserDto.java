@@ -34,13 +34,6 @@ public class UserDto {
     @NotEmpty(message = "Email can not be empty")
     @Email(message = "Please provide a valid email")
     private String email;
-    
-    @NotEmpty(message = "Username can not be empty")
-    private String username;
-
-    @NotEmpty(message = "Password can not be empty")
-    @JsonIgnore
-    private String password;
 
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
