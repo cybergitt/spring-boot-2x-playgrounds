@@ -8,7 +8,7 @@ import com.coffeegit.springboot.jpamysql.exceptions.AppException;
 import com.coffeegit.springboot.jpamysql.model.dto.UserDto;
 import com.coffeegit.springboot.jpamysql.model.entity.User;
 
-public interface UserService {
+public interface AccountService {
 
     List<User> getAllUsers();
 
