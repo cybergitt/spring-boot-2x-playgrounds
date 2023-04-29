@@ -58,5 +58,6 @@
 
 	<modules>
 		<module>spring-boot-logging</module>
+		<module>spring-boot-persistence</module>
 	</modules>
 </project>
