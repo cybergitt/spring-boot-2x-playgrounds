@@ -1,12 +1,12 @@
-package com.coffeegit.springboot.jpamysql.basic.service;
+package com.coffeegit.springboot.jpamysql.customqueries.service;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.coffeegit.springboot.jpamysql.basic.entity.User;
-import com.coffeegit.springboot.jpamysql.basic.repository.UserRepository;
+import com.coffeegit.springboot.jpamysql.customqueries.entity.User;
+import com.coffeegit.springboot.jpamysql.customqueries.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllActiveUsers() {
+        return userRepository.findAllActiveUers();
     }
 
     @Override

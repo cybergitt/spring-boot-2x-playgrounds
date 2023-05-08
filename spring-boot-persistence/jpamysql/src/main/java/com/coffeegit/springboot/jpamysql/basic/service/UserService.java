@@ -7,9 +7,9 @@ public interface UserService {
 
     User createUser(User user);
     
-    User findOneById(Long userId);
+    User getUserById(Long userId);
     
-    List<User> findAllUsers();
+    List<User> getAllUsers();
 
     User updateUser(User user);
 

@@ -1,4 +1,4 @@
-package com.coffeegit.springboot.jpamysql.basic.controller;
+package com.coffeegit.springboot.jpamysql.customqueries.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coffeegit.springboot.jpamysql.basic.dto.UserDto;
-import com.coffeegit.springboot.jpamysql.basic.entity.User;
-import com.coffeegit.springboot.jpamysql.basic.service.UserService;
+import com.coffeegit.springboot.jpamysql.customqueries.dto.UserDto;
+import com.coffeegit.springboot.jpamysql.customqueries.entity.User;
+import com.coffeegit.springboot.jpamysql.customqueries.service.UserService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/users")
+@RequestMapping("api/custom/users")
 public class UserController {
     
     private ModelMapper modelMapper;
@@ -64,6 +64,14 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDto.UserResponse>> getAllUsers() {
         List<UserDto.UserResponse> responses = userService.getAllUsers().stream().map(user -> modelMapper.map(user, UserDto.UserResponse.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    //build get all users REST API
+    // {{host}}:{{port}}/api/users/active
+    @GetMapping("/active")
+    public ResponseEntity<List<UserDto.UserResponse>> getAllActiveUsers() {
+        List<UserDto.UserResponse> responses = userService.getAllActiveUsers().stream().map(user -> modelMapper.map(user, UserDto.UserResponse.class)).collect(Collectors.toList());
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
