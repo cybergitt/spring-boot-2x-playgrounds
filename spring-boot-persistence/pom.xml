@@ -14,5 +14,6 @@
 
 	<modules>
 		<module>jpamysql</module>
+		<module>mybatis-postgres</module>
 	</modules>
 </project>

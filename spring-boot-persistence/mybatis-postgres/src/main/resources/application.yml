@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: "Spring MyBatis Postgres"
+  ## DataSource properties
+  datasource:
+    url: jdbc:postgresql://localhost:5432/base_hub
+    username: postgres
+    password: magicule
+    driver-class-name: org.postgresql.Driver
+    ## HikariCP configuration (Advanced Data Source Configurations)
+    hikari:
+      minimum-idle: 0 # minimum connection pool size is 0
+      maximum-pool-size: 40 # and it can grow to at most 40 connections
+      max-lifetime: 900000 # instructs Hikari to retire pooled connections after 15 minutes
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+      auto-commit: false # The auto-commit mode is disabled, and we are going to let Hibernate know about this via the hibernate.connection.provider_disables_autocommit setting
+      data-source-properties: 
+        use-server-prep-stmts: false # enable statement caching
+        cache-prep-stmts: true # enable statement caching
+        prep-stmt-cache-size: 500 # enable statement caching
+        prep-stmt-cache-sql-limit: 1024 # enable statement caching
+  sql:
+    init:
+      continue-on-error: true
+      mode: always
+      platform: postgres
+## Logging properties
+logging:
+  level:
+    org:
+      hibernate: INFO
+      SQL: DEBUG
+      cache: DEBUG
+      stat: DEBUG
+    # the most straight-forward way of logging SQL statements 
+    # along with their runtime bind parameter values
+    # because the proxy intercepts all statement executions, 
+    # the bind parameter values can be introspected and printed as well
+    net: 
+      ttddyy: 
+        dsproxy: 
+          listener: DEBUG
