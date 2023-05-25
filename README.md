@@ -7,7 +7,7 @@ This project is a collection of small and focused spring boot playgrounds - each
     - Logging Log4j
     - Logging Lombok
     - Logging Log4j2
-2. Persistence
+2. ORM (JPA) and Persistence (MyBatis)
     - JPA
         - JPA MySQL (Basic, Custom Queries, Pagination & Sorting, Advanced)
         - JPA PostgreSQL (Basic, Custom Queries, Pagination & Sorting, Advanced)
