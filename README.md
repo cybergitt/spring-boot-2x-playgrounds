@@ -1,6 +1,6 @@
-# Spring Boot Playgrounds
+# Spring Boot 2.x Playgrounds
 
-This project is a collection of small and focused spring boot playgrounds - each covering a single and well defined area of development in the Java Spring Boot ecosystem.
+This project is a collection of small and focused spring boot version 2.x playgrounds - each covering a single and well defined area of development in the Java Spring Boot ecosystem.
 
 1. Logging
     - Logging Logback
